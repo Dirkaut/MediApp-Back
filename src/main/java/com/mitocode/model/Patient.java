@@ -41,7 +41,7 @@ public class Patient {
     @Column(nullable = false, length = 55)
     private String email;
 
-    @OneToMany(mappedBy = "patient", cascade = { CascadeType.ALL}, orphanRemoval = true)//, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient", cascade = { CascadeType.ALL})//, fetch = FetchType.EAGER)
     private List<Signal> signals;
 
 }

@@ -31,7 +31,7 @@ public class PatientController {
 
     //@Autowired
     private final IPatientService service;// = new PatientService();
-    @Qualifier("defaultMapper")
+    @Qualifier("signalMapper")
     private final ModelMapper modelMapper;
 
     /*public PatientController(PatientService service) {

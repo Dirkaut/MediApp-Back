@@ -27,7 +27,7 @@ public class SignalController {
 
     private final ISignalService service;
 
-    @Qualifier("defaultMapper")
+    @Qualifier("signalMapper")
     private final ModelMapper modelMapper;
 
     @GetMapping
@@ -39,9 +39,9 @@ public class SignalController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SignalDTO> findById(@PathVariable("id") Integer id){
-        Signal obj = service.findById(id);
+        SignalDTO obj = convertToDto(service.findById(id));
 
-        return ResponseEntity.ok(convertToDto(obj));
+        return ResponseEntity.ok(obj);
         //return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 

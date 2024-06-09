@@ -5,6 +5,7 @@ import com.mitocode.dto.MedicDTO;
 import com.mitocode.dto.SignalDTO;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Medic;
+import com.mitocode.model.Patient;
 import com.mitocode.model.Signal;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -42,17 +43,24 @@ public class MapperConfig {
         ModelMapper mapper = new ModelMapper();
 
         mapper.createTypeMap(Consult.class, ConsultDTO.class)
-                .addMapping(e -> e.getMedic().getFirstName(), (dest, v) -> dest.getMedic().setPrimaryName((String) v))
+                .addMapping(e -> e.getMedic().getFirstName() , (dest, v) -> dest.getMedic().setPrimaryName((String) v))
                 .addMapping(e -> e.getMedic().getLastName(), (dest, v) -> dest.getMedic().setSurname((String) v));
 
         return mapper;
     }
 
+    @Bean("signalMapper")
     public ModelMapper signalMapper(){
         ModelMapper mapper = new ModelMapper();
 
         mapper.createTypeMap(Signal.class, SignalDTO.class)
-                .addMapping(e -> e.getPatient().getIdPatient(), (dest, v) -> dest.setIdSignal((Integer) v));
+                .addMappings(m -> m.skip(SignalDTO::setFullName))
+                .setPostConverter(context -> {
+                    Signal source = context.getSource();
+                    SignalDTO destination = context.getDestination();
+                    destination.setFullName(source.getPatient().getFirstName() + " " + source.getPatient().getLastName());
+                    return destination;
+                });
 
         return mapper;
     }

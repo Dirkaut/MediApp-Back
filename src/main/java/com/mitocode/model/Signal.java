@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +20,8 @@ public class Signal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer idSignal;
-    private String date;
+    @Column(nullable = false)
+    private LocalDateTime date;
     private String temperature;
     private String pulse;
     private String breathingRhythm;
